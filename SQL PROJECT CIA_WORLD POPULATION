@@ -1,0 +1,75 @@
+USE demo_database;
+
+create or replace table CIA_WORLD_POPULATION(
+country VARCHAR(100),
+AREA NUMBER(20,2),
+birth_rate NUMBER(20,2),
+death_rate NUMBER(20,2),
+infant_mortality_rate NUMBER(20,2),
+internet_users NUMBER(20,2),
+life_exp_at_birth NUMBER(20,2),
+maternal_mortality_rate NUMBER(20,2),
+net_migration_rate NUMBER(20,2),
+population INT,
+population_growth_rate NUMBER(20,2)
+);
+
+SELECT * FROM CIA_WORLD_POPULATION
+
+/*Approach/Project Idea
+You will learn how to use SQL to answer the following analytical questions:
+1. Which country has the highest population?
+2. Which country has the least number of people?
+3. Which country is witnessing the highest population growth?
+4. Which country has an extraordinary number for the population?--(pending)
+5. Which is the most densely populated country in the world? -- (pending)
+*/
+
+select count(distinct country) 
+from CIA_WORLD_POPULATION;
+
+---- Total counties - 259----
+
+select country, max(population)
+from CIA_WORLD_POPULATION
+group by country
+order by max(population) desc
+limit 1;
+
+--- Country with highest population is China-(1355692576)----
+
+select country, min(population)
+from CIA_WORLD_POPULATION
+group by country
+order by min(population)
+limit 1;
+
+--2. Which country has the least number of people?---
+ The least populated country is 
+South Georgia and South Sandwich Islands
+
+
+--Which country is witnessing the highest population growth?--
+
+select country, max(population_growth_rate)
+from CIA_WORLD_POPULATION
+group by country
+order by max(population) desc
+limit 1;
+
+-- The highest population growth witnessing country is China(0.44)
+
+/*--Which is the most densely populated country in the world?
+
+select div(area/population) density
+from CIA_WORLD_POPULATION;
+
+-- which country has the highest number of internet user--
+
+select country, max(internet_users)
+from CIA_WORLD_POPULATION
+group by country
+order by max(internet_users) desc
+limit 1;
+
+-- the country has highest no of internet user is in CHINA (389000000.00)
